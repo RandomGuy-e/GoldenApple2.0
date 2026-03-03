@@ -118,7 +118,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu'];
+	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'brob'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -2062,6 +2062,11 @@ class PlayState extends MusicBeatState
 					dad.x = -700 + Math.sin(elapsedtime) * 425;
 				case 'tunnel-dave':
 					dad.y -= (Math.sin(elapsedtime) * 0.6);
+				case 'brob':
+					if (SONG.song.toLowerCase() == 'fresh-and-toasted')
+					{
+						dad.y += (Math.sin(elapsedtime) * 0.6);
+					}
 				default:
 					dad.y += (Math.sin(elapsedtime) * 0.6);
 			}
@@ -2098,6 +2103,11 @@ class PlayState extends MusicBeatState
 					badai.angle = Math.sin(elapsedtime) * 15;
 					badai.x += Math.sin(elapsedtime) * 0.6;
 					badai.y += (Math.sin(elapsedtime) * 0.6);
+				case 'brob':
+					if (SONG.song.toLowerCase() == 'fresh-and-toasted')
+					{
+						badai.y += (Math.sin(elapsedtime) * 0.6);
+					}
 				default:
 					badai.y += (Math.sin(elapsedtime) * 0.6);
 			}
@@ -2907,6 +2917,8 @@ class PlayState extends MusicBeatState
 			case 'playrobot-crazy':
 				camFollow.x -= 160;
 				camFollow.y -= 10;
+			case 'brob':
+				camFollow.y += 75;
 		}
 	}
 
@@ -4264,6 +4276,8 @@ class PlayState extends MusicBeatState
 			case 'playrobot-crazy':
 				dad.y += 365;
 				dad.x += 165;
+			case 'brob':
+				dad.y += 300;
 		}
 	}
 	

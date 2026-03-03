@@ -811,6 +811,23 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				nativelyPlayable = true;
+			case 'brob':
+				frames = Paths.getSparrowAtlas('bambi/brobgonal');
+				animation.addByPrefix('idle', 'IDLE', 24, false);
+				for (anim in ['LEFT', 'DOWN', 'UP', 'RIGHT'])
+				{
+					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
+				}
+
+				addOffset('idle');
+				addOffset('singLEFT', 20, -30);
+				addOffset('singDOWN', -3, 1);
+				addOffset('singUP', -8, 2);
+				addOffset('singRIGHT', 154, -14);
+
+				playAnim('idle');
+
+				antialiasing = false;
 		}
 		dance();
 
