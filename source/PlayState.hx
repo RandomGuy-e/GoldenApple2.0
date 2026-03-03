@@ -94,7 +94,7 @@ class PlayState extends MusicBeatState
 
 	var songLength:Float = 0;
 
-	public var darkLevels:Array<String> = ['bambiFarmNight', 'daveHouse_night', 'unfairness', 'disabled'];
+	public var darkLevels:Array<String> = ['bambiFarmNight', 'daveHouse_night', 'unfairness', 'disabled', 'jambino'];
 	public var sunsetLevels:Array<String> = ['bambiFarmSunset', 'daveHouse_Sunset'];
 
 	var howManyPlayerNotes:Int = 0;
@@ -201,6 +201,8 @@ class PlayState extends MusicBeatState
 
 	public var bfSpazOut:Bool = false;
 
+	var newbg:FlxSprite;
+
 	private var STUPDVARIABLETHATSHOULDNTBENEEDED:FlxSprite;
 
 	private var healthBarBG:FlxSprite;
@@ -285,6 +287,10 @@ class PlayState extends MusicBeatState
 	var kadeEngineWatermark:FlxText;
 
 	var thunderBlack:FlxSprite;
+
+	var helloIAmNotMarcellosIAmMrBambiGiveMeYourFOOOOOOODDDDdddddd:FlxTypedGroup<FlxSprite>;
+
+	public var sonicAllAmericanHotdogCombo:Bool = false;
 
 	override public function create()
 	{
@@ -543,8 +549,9 @@ class PlayState extends MusicBeatState
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
 		{
-			dad.color = nightColor;
-			gf.color = nightColor;
+			if (SONG.song.toLowerCase() != 'jambino')
+				dad.color = nightColor;
+        		gf.color = nightColor;
 			boyfriend.color = nightColor;
 		}
 
@@ -983,7 +990,7 @@ class PlayState extends MusicBeatState
 				}
 				
 
-			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'metallic' | 'strawberry' | 'keyboard':
+			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'metallic' | 'strawberry' | 'keyboard' | 'jambino':
 				defaultCamZoom = 0.9;
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/redsky'));
 				bg.active = true;
@@ -1021,6 +1028,22 @@ class PlayState extends MusicBeatState
 					case 'keyboard':
 						bg.loadGraphic(Paths.image('bambi/keyboard'));
 						curStage = 'keyboard';
+					case 'jambino':
+						curStage = 'jambino';
+						defaultCamZoom = 0.65;
+						bg.loadGraphic(Paths.image('bambi/image0'));
+						newbg = new FlxSprite(-600, -200).loadGraphic(Paths.image('bambi/image1'));
+						newbg.active = true;
+
+						bg.setGraphicSize(2560, 1400);
+						bg.updateHitbox();
+						newbg.setGraphicSize(2560, 1400);
+						newbg.updateHitbox();
+
+						bg.antialiasing = newbg.antialiasing = false;
+
+						badai = new Character(100, 100, 'brob');
+
 					default:
 						bg.loadGraphic(Paths.image('dave/redsky'));
 						curStage = 'daveEvilHouse';
@@ -1028,6 +1051,11 @@ class PlayState extends MusicBeatState
 				
 				sprites.add(bg);
 				add(bg);
+
+				if (curStage == 'jambino') {
+					sprites.add(newbg);
+					add(newbg);
+				}
 
 				if (SONG.song.toLowerCase() == 'disruption') {
 					poop = new StupidDumbSprite(-100, -100, 'lol');
@@ -1044,6 +1072,16 @@ class PlayState extends MusicBeatState
 				testshader.waveSpeed = 2;
 				bg.shader = testshader.shader;
 				curbg = bg;
+
+				if (curStage == 'jambino') {
+					var testshader2:Shaders.GlitchEffect = new Shaders.GlitchEffect();
+					testshader2.waveAmplitude = 0.1;
+					testshader2.waveFrequency = 5;
+					testshader2.waveSpeed = 2;
+					newbg.shader = testshader2.shader;
+				}
+
+
 			case 'wireframe':
 				defaultCamZoom = 0.67;
 				curStage = 'redTunnel';
@@ -1382,6 +1420,10 @@ class PlayState extends MusicBeatState
 			+ misses, iconRPC);
 		#end
 		FlxG.sound.music.onComplete = endSong;
+
+		if (SONG.song.toLowerCase() == 'jambino')
+			FlxTween.num(defaultCamZoom, 1, (Conductor.crochet / 1000) * 64, {onComplete: function(twn:FlxTween) defaultCamZoom = 0.65}, function(v:Float) defaultCamZoom = v);
+
 	}
 
 	var debugNum:Int = 0;
@@ -1825,7 +1867,7 @@ class PlayState extends MusicBeatState
 			redTunnel.angle += elapsed * 3.5;
 		}
 		banduJunk += elapsed * 2.5;
-		if(badaiTime)
+		if(badaiTime && SONG.song.toLowerCase() != 'jambino')
 		{
 			dad.angle += elapsed * 50;
 		}
@@ -1836,6 +1878,19 @@ class PlayState extends MusicBeatState
 				var shad = cast(curbg.shader, Shaders.GlitchShader);
 				shad.uTime.value[0] += elapsed;
 			}
+		}
+
+		if (curStage == 'jambino') {
+			if (newbg != null)
+				{
+					if (newbg.active) // only the furiosity background is active
+					{
+						var shad = cast(newbg.shader, Shaders.GlitchShader);
+						shad.uTime.value[0] += elapsed;
+						newbg.alpha = Math.sin(elapsedtime) / 2.5 + 0.6;
+						//shad.alpha = new openfl.display.ShaderParameter_Float(Math.sin(elapsedtime) / 2.5 + 0.6);
+					}
+				}
 		}
 
 		//dvd screensaver lookin ass
@@ -2691,15 +2746,52 @@ class PlayState extends MusicBeatState
 					(SONG.song.toLowerCase() == 'applecore' && !SONG.notes[Math.floor(curStep / 16)].altAnim && !wtfThing && dad.POOP) ? { // hi
 						if (littleIdiot != null) littleIdiot.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true); 
 						littleIdiot.holdTimer = 0;}: {
-							if(badaiTime)
+							if (badaiTime)
 							{
-								badai.holdTimer = 0;
-								badai.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								if (SONG.song.toLowerCase() == 'the-big-dingle')
+								{
+									dad.holdTimer = 0;
+									dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+
+									badai.holdTimer = 0;
+									badai.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								}
+								else
+								{
+									badai.holdTimer = 0;
+									badai.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								}
 							}
-							dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
-							dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
-							dad.holdTimer = 0;
-							dadmirror.holdTimer = 0;
+							else
+							{
+								if (daNote.isSustainNote)
+								{
+									if (dad.animation.getByName('sing' + fuckingDumbassBullshitFuckYou + '-hold') != null)
+									{
+										dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + '-hold' + altAnim, true);
+										dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + '-hold' + altAnim, true);
+									}
+									else
+									{
+										dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+										dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+									}
+								}
+								else
+								{
+									dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+									dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+									if (SONG.song.toLowerCase() == 'recovered-project' && sonicAllAmericanHotdogCombo && eyesoreson)
+									{
+										helloIAmNotMarcellosIAmMrBambiGiveMeYourFOOOOOOODDDDdddddd.forEach(function(spr:FlxSprite)
+										{
+											spr.visible = spr.ID == daNote.noteData;
+										});
+									}
+								}
+								dad.holdTimer = 0;
+								dadmirror.holdTimer = 0;
+							}
 						}
 
 					if (SONG.song.toLowerCase() != 'senpai' && SONG.song.toLowerCase() != 'roses' && SONG.song.toLowerCase() != 'thorns')
@@ -2919,6 +3011,8 @@ class PlayState extends MusicBeatState
 				camFollow.y -= 10;
 			case 'brob':
 				camFollow.y += 75;
+			case 'jambi':
+				camFollow.y += 175;
 		}
 	}
 
@@ -4080,6 +4174,19 @@ class PlayState extends MusicBeatState
 					case 208 | 256 | 372 | 392:
 						gfSpeed = 1;
 				}
+			case 'jambino':
+				switch (curBeat) {
+					case 668:
+						badaiTime = true;
+						badai.scale.set(0, 0);
+						badai.visible = true;
+						FlxTween.tween(badai, {"scale.x": 1, "scale.y": 1}, 0.25, {ease:FlxEase.cubeIn});
+						FlxTween.tween(dad, {x: dad.x - 145, y: dad.y - 200}, 1, {ease: FlxEase.quadOut});
+					case 956:
+						badaiTime = false;
+						FlxTween.tween(badai, {x: badai.x - 350}, 0.75, {ease:FlxEase.quadOut});
+						FlxTween.tween(dad, {x: dad.x + 145, y: dad.y + 200}, 1, {ease: FlxEase.quadOut});
+				}
 		}
 
 		if (shakeCam)
@@ -4278,6 +4385,8 @@ class PlayState extends MusicBeatState
 				dad.x += 165;
 			case 'brob':
 				dad.y += 300;
+			case 'jambi':
+				dad.x -= 175;
 		}
 	}
 	

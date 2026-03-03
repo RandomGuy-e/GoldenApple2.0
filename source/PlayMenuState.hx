@@ -28,7 +28,7 @@ class PlayMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'extras'];
+	var optionShit:Array<String> = ['disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'jambino', 'extras'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;

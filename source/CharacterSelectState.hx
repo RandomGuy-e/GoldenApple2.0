@@ -69,6 +69,7 @@ class CharacterSelectState extends MusicBeatState
 		new CharacterInSelect(['diamond-man'], ["Diamond Man"]),
 		new CharacterInSelect(['playrobot', 'playrobot-crazy'], ["Playrobot", 'Playrobot (Crazy)']),
 		new CharacterInSelect(['brob'], ["Brobgonal"]),
+		new CharacterInSelect(['jambi'], ["Jambi"]),
 		new CharacterInSelect(['ringi'], ["Ringi"]),
 		new CharacterInSelect(['bambom'], ["Bambom"]),
 		new CharacterInSelect(['bendu'], ["Bendu"]),

@@ -97,7 +97,7 @@ class FreeplayState extends MusicBeatState
 		{
 			default:
 				addWeek(['Disruption', 'AppleCore'], 2, ['bambi-piss-3d', 'bandu']);
-				addWeek(['Disability', 'Wireframe', 'Algebra', 'Fresh-And-Toasted'], 1,['split-dave-3d', 'tunnel-dave', 'og-dave', 'brob']);
+				addWeek(['Disability', 'Wireframe', 'Algebra', 'Fresh-And-Toasted', 'Jambino'], 1,['split-dave-3d', 'tunnel-dave', 'og-dave', 'brob', 'jambi']);
 		}
 	}
 

@@ -828,6 +828,35 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				antialiasing = false;
+			case 'jambi':
+				frames = Paths.getSparrowAtlas('bambi/jambinew');
+				/*animation.addByIndices('danceLeft', 'jambiidle', [5, 4, 3, 2, 1, 0], '', 24, false);
+					animation.addByIndices('danceRight', 'jambiidle', ) */
+				animation.addByPrefix('idle', 'jambiidle', 24, false);
+				animation.addByPrefix('singLEFT', 'electleft', 24, false);
+				animation.addByPrefix('singDOWN', 'downelectric', 24, false);
+				animation.addByPrefix('singUP', 'upelect', 24, false);
+				animation.addByPrefix('singRIGHT', 'rightrelelctric', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'shockleft', 24, false);
+				animation.addByPrefix('singUP-alt', 'upalt', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'shockdown', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'shockright', 24, false);
+
+				addOffset('idle');
+				addOffset('singLEFT', 370, -20);
+				addOffset('singDOWN', -10, -220);
+				addOffset('singUP', 0, 180);
+				addOffset('singRIGHT', -180);
+
+				addOffset('singLEFT-alt', 690, 10);
+				addOffset('singDOWN-alt', -70, -190);
+				addOffset('singUP-alt', 40, 410);
+				addOffset('singRIGHT-alt', -280, 140);
+
+				// playAnim('danceRight');
+				playAnim('idle');
+
+				antialiasing = false;
 		}
 		dance();
 

@@ -60,7 +60,7 @@ class TitleState extends MusicBeatState
 
 		// preload all the long songs
 		var preloadSongs:Array<String> = [
-			'Algebra', 'AppleCore'
+			'Algebra', 'AppleCore', 'Jambino'
 		];
 
 		for (song in preloadSongs) {
